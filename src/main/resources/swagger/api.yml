@@ -1,0 +1,142 @@
+swagger: '2.0'
+info:
+  title: Tweets consumer
+  description: versions
+  version: 1.0.0
+basePath: /api/tweet
+tags:
+  - name: tweets
+schemes:
+  - https
+  - http
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header  
+paths:
+  /tweets:
+    get:
+      tags:
+        - tweets
+      summary: get tweets
+      security:
+        - Bearer: []
+      operationId: getTweets
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: versions response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Tweet'
+        '400':
+          description: InvalidqueryParameter
+        '500':
+          description: Server error
+  /tweets/{user}:
+    get:
+      tags:
+        - tweets
+      summary: get tweets of an user
+      security:
+        - Bearer: []
+      operationId: getTweetsByUser
+      produces:
+        - application/json
+      parameters:
+        - name: "user"
+          in: "path"
+          description: "user"
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: versions response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Tweet'
+        '400':
+          description: InvalidqueryParameter
+        '500':
+          description: Server error
+  /tweet/{id}:
+    put:
+      tags:
+        - tweets
+      summary: validate tweet
+      security:
+        - Bearer: []
+      operationId: validateTweet
+      produces:
+        - application/json
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "id a tweet"
+          required: true
+          type: "string"
+        - name: body
+          in: body
+          description: "tweet to modify"
+          required: true
+          schema:
+            $ref: "#/definitions/Tweet"
+      responses:
+        '200':
+          description: versions response
+          schema:
+            $ref: '#/definitions/Tweet'
+        '400':
+          description: InvalidqueryParameter
+        '500':
+          description: Server error
+  /hashtags/ranking:
+    get:
+      tags:
+        - hashtags
+      summary: ranking more used hashtags
+      security:
+        - Bearer: []
+      operationId: getRankingHashtags
+      produces:
+        - application/json
+      parameters:
+        - name: "positions"
+          in: "query"
+          description: "number of positions to see"
+          required: false
+          type: "integer"
+      responses:
+        '200':
+          description: versions response
+          schema:
+            $ref: '#/definitions/Tweet'
+        '400':
+          description: InvalidqueryParameter
+        '500':
+          description: Server error
+  
+definitions:
+  Tweet:
+    type: object
+    properties:
+      id:
+        type: string
+      text:
+        type: string
+      location:
+        type: string
+      validated:
+        type: boolean
+      user:
+        type: string
+    required:
+      - id
+      - text
+      - location
+      - validated
+      - user

@@ -1,0 +1,23 @@
+server:
+  port: 8085
+  servlet:
+    context-path: /api/tweet/1.0.0
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE;INIT=CREATE SCHEMA IF NOT EXISTS testdb;Mode=Oracle
+    username: sa
+    password: sa
+    sql-script-encoding: UTF-8
+    platform: h2
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  jpa:
+    hibernate:
+      show-sql: true
+      ddl-auto: update
+   
+
